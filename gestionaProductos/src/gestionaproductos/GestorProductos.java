@@ -4,6 +4,7 @@
  */
 package gestionaproductos;
 
+import java.text.DecimalFormat;
 import java.util.InputMismatchException;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -29,6 +30,7 @@ public class GestorProductos extends javax.swing.JFrame {
     public GestorProductos() {
         initComponents();
         armarCabecera();
+        setLocationRelativeTo(null);
 //        javax.swing.JTextField txtPrecio = new CampoNumerico(20);
 //        txtPrecio = crearCampoNumerico();
     }
@@ -173,12 +175,12 @@ public class GestorProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
-        // TODO add your handling code here:
+  
     }//GEN-LAST:event_txtPrecioActionPerformed
 
     private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
         char caracter = evt.getKeyChar();
-        char separadorDecimal = '.';
+        char separadorDecimal = ',';
         String txtActual;
 
         if (caracter == separadorDecimal) {
@@ -222,6 +224,7 @@ public class GestorProductos extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         String nombreProducto = txtNombreProducto.getText();
         String categoria = (String) comboCategoria.getSelectedItem();
+      
 
         if (nombreProducto.isBlank()
                 || categoria.isBlank()
@@ -229,11 +232,24 @@ public class GestorProductos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tenés que ingresar datos en todos los campos");
             return;
         }
-        double precio = Double.parseDouble(txtPrecio.getText());
+        
+        char[] charPrecio=txtPrecio.getText().toCharArray();
+               
+        for (int i = 0; i < charPrecio.length; i++) {
+            if (charPrecio[i] == ',') {
+                charPrecio[i] = '.';
+            }
+        }
+        
+        String strPrecio = String.valueOf(charPrecio);
+
+       double precio = Double.parseDouble(strPrecio);
+       
         if (precio <= 0) {
             JOptionPane.showMessageDialog(this, "El precio tiene que ser mayor que cero");
         }
 
+    
         cargarDatos(new Producto(
                 nombreProducto,
                 categoria,
@@ -299,10 +315,12 @@ public class GestorProductos extends javax.swing.JFrame {
     }
 
     private void cargarDatos(Producto producto) {
+        
         modelo.addRow(new Object[]{
             producto.getNombreProducto(),
             producto.getCategoria(),
-            producto.getPrecio()}
+            String.format("%.2f", producto.getPrecio() // Le damos formato al resultado para que muestre solo 2 dígitos después de la coma.
+            )}
         );
 
     }
