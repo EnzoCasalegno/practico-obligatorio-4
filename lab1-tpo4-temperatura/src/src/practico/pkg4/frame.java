@@ -4,6 +4,7 @@
  */
 package practico.pkg4;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -56,6 +57,9 @@ public class frame extends javax.swing.JFrame {
             }
         });
         txtCentigrados.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                onEnter(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCentigradosKeyTyped(evt);
             }
@@ -98,30 +102,9 @@ public class frame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConvertirActionPerformed
-        Double tempCentigrados = null;
-        Double tempFahrenheit = null;
-        String strFahrenheit = "";
-        
-        try{
-            tempCentigrados = Double.parseDouble(txtCentigrados.getText());
-            
-        }
-        catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "Tiene que ser un numero");
-            tempCentigrados = null;
-        }
-        
-        if (tempCentigrados != null) {
-            tempFahrenheit = tempCentigrados * 9/5 + 32;
-            strFahrenheit = String.format("%.2f", tempFahrenheit); // Le damos formato al resultado para que muestre solo 2 dígitos después de la coma.
-            JOptionPane.showMessageDialog(this, " Los grados en F son:  " + strFahrenheit + "°");
-        }
+        convertirCentigradosFahrenheit();
 
     }//GEN-LAST:event_btnConvertirActionPerformed
-
-    private void txtCentigradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCentigradosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCentigradosActionPerformed
 
     private void txtCentigradosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCentigradosKeyTyped
         char caracter = evt.getKeyChar();
@@ -132,6 +115,16 @@ public class frame extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtCentigradosKeyTyped
+
+    private void onEnter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_onEnter
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            convertirCentigradosFahrenheit();
+        }
+    }//GEN-LAST:event_onEnter
+
+    private void txtCentigradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCentigradosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCentigradosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,6 +159,27 @@ public class frame extends javax.swing.JFrame {
                 new frame().setVisible(true);
             }
         });
+    }
+    
+    private void convertirCentigradosFahrenheit(){
+        Double tempCentigrados = null;
+        Double tempFahrenheit = null;
+        String strFahrenheit = "";
+        
+        try{
+            tempCentigrados = Double.parseDouble(txtCentigrados.getText());
+            
+        }
+        catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Tiene que ser un numero");
+            tempCentigrados = null;
+        }
+        
+        if (tempCentigrados != null) {
+            tempFahrenheit = tempCentigrados * 9/5 + 32;
+            strFahrenheit = String.format("%.2f", tempFahrenheit); // Le damos formato al resultado para que muestre solo 2 dígitos después de la coma.
+            JOptionPane.showMessageDialog(this, " Los grados en F son:  " + strFahrenheit + "°");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
