@@ -1,7 +1,3 @@
-**/*.properties
-/nbproject/private
-*.xml
-
 # Compiled class file
 *.class
 
@@ -28,3 +24,6 @@ hs_err_pid*
 replay_pid*
 /gestionaProductos/nbproject/private/
 /gestionaProductos/build/
+/fixStupidNetBeans/nbproject/private/
+/lab1-tpo4-temperatura/nbproject/private/
+/lab1-tpo4-temperatura/build/
